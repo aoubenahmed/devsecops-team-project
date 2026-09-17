@@ -1,0 +1,66 @@
+name: Tâche / User Story
+description: Créer une tâche à ajouter au backlog ou à un sprint
+title: "[Tâche] "
+labels: ["type/task"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Tâche d'équipe - Projet DevSecOps
+        Remplissez ce formulaire pour créer une tâche. Chaque tâche doit être
+        mesurable et validable par un reviewer.
+  - type: input
+    id: titre
+    attributes:
+      label: Titre court
+      description: "Ex : Provisionner le module réseau VPC avec Terraform"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Contexte / Description
+      description: Pourquoi cette tâche ? Que fait-on précisément ?
+    validations:
+      required: true
+  - type: dropdown
+    id: domaine
+    attributes:
+      label: Domaine
+      multiple: true
+      options:
+        - Terraform (domain/terraform)
+        - CloudFormation / CI/CD (domain/cloudformation)
+        - Pipeline & automatisation (domain/pipeline)
+        - Lambda (domain/lambda)
+        - Monitoring (domain/monitoring)
+        - Documentation (domain/docs)
+    validations:
+      required: true
+  - type: input
+    id: assignee
+    attributes:
+      label: Responsable (assignee)
+      description: "@username de la personne qui s'en charge"
+  - type: dropdown
+    id: priorite
+    attributes:
+      label: Priorité
+      options:
+        - P0 - Urgent (priority/P0)
+        - P1 - Prioritaire (priority/P1)
+        - P2 - Normale (priority/P2)
+    validations:
+      required: true
+  - type: textarea
+    id: criteres
+    attributes:
+      label: Critères d'acceptation / Definition of Done
+      description: "Liste de points vérifiables qui valident la tâche"
+      placeholder: |
+        - [ ] Code implémenté et poussé en PR
+        - [ ] Au moins 1 approbation d'un coéquipier
+        - [ ] Tests / validation effectués
+        - [ ] Documentation mise à jour
+    validations:
+      required: true

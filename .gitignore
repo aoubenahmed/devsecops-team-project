@@ -1,0 +1,21 @@
+# Terraform
+terraform-manifests/**/.terraform/
+terraform-manifests/**/*.tfstate*
+terraform-manifests/**/*.tfvars
+terraform-manifests/**/crash.log
+
+# AWS / creds
+.env
+.env.*
+*.pem
+*.key
+credentials
+
+# EDI & systemes
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Logs
+*.log
