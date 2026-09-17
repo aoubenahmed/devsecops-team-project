@@ -1,0 +1,92 @@
+========================================================
+RESUME DE L'IDEE DU PROJET
+Projet d'equipe - 3 etudiants ingenieurs
+Type : Projet de Fin d'Etudes (PFE) en DevOps / DevSecOps / AWS
+Date : Septembre 2026
+========================================================
+
+1) CONCEPT
+----------
+Construire, a partir de zero, une "Software Factory" DevSecOps hybride
+sur AWS : une plateforme qui automatise le cycle complet de livraison
+logicielle (build, test, securite, deploy) en mettant la SECURITE au
+coeur de chaque etape - et non comme une phase ajoutee a la fin.
+
+Le mot "hybride" traduit un choix d'architecture cle :
+- TERRAFORM pour l'infrastructure de fondation (reseau, compute)
+- CLOUDFORMATION pour la chaine CI/CD (pipeline, builds)
+
+Deux outils, deux responsabilites, une integration seamless.
+
+2) POURQUOI CE PROJET (objectifs)
+---------------------------------
+- Demontrer une maitrise reelle de la chaîne DevOps end-to-end
+  sur AWS (services natifs + IaC).
+- Integrer un volet Securite (DevSecOps) : c'est le critere n°1
+  recherche par les recruteurs DevOps/SRE aujourd'hui.
+- Travailler en equipe comme en entreprise : backlog, sprints,
+  branches, PR, reviews, documentation.
+- Obtenir des preuves concretes pour un PFE / alternance / premier
+  emploi : code sur GitHub, badges CI, demo, architecture documentee.
+
+3) CE QUE FAIT LA PLATEFORME (flux)
+-----------------------------------
+Developpeur pousse une modification (branche + PR)
+   -> CodePipeline detecte l'evenement GitHub
+   -> CodeBuild compile et scanne le precedent code
+        * secrets scanning (git-secrets)
+        * SAST (Snyk)          -> analyse statique
+        * SCA (Clair)          -> dependances vulnérables
+   -> image Docker construite, poussee dans ECR (scan inclus)
+   -> deploiement Blue/Green sans interruption sur ECS
+        * cluster staging puis production (Terraform)
+        * bascule via ALB + target groups
+   -> l'application livree est analysee en continu :
+        * DAST (OWASP ZAP) sur l'app deployee
+        * RASP (Falco) sur les containers en production
+        * CloudWatch / CloudTrail / AWS Config (audit + drift)
+        * Security Hub centralise les alertes
+        * Lambda normalise les evenements -> SNS -> alertes equipe
+
+4) ARCHITECTURE TECHNIQUE (grandes lignes)
+------------------------------------------
+Reseau : VPC /16 multi-AZ, subnets publics (ALB + NAT EC2 gratuits)
+         et subnets prives (clusters ECS), securisation par SG
+Compute : ECS EC2 Launch Type, clusters staging + production,
+         Auto Scaling Groups
+CI/CD   : CodePipeline + CodeBuild (plusieurs stages securite),
+         artefacts S3 chiffres KMS, CodeConnections GitHub
+Securite: SAST, SCA, DAST, RASP, secrets scan, Security Hub,
+         chiffrement, moindre privilege IAM
+Ops     : CloudWatch logs, EventBridge, SNS, CloudTrail, Config
+Cout    : compatible AWS Free Tier (NAT EC2 au lieu de NAT Gateway)
+
+5) ORGANISATION DE L'EQUIPE (2 mois, 8 sprints d'une semaine)
+-------------------------------------------------------------
+Membre A - Terraform / Infrastructure (VPC, ECS, reseau)
+Membre B - CloudFormation / CI-CD (pipeline, builds, deploiement)
+Membre C - Securite / QA / Documentation (scans, lambda, docs)
+Sprint 1-2 : fondations Terraform + materiaux
+Sprint 3-5 : pipeline CI/CD + integration securite
+Sprint 6-7 : deploiement complet, tests, hardening
+Sprint 8   : documentation finale, demo, presentation PFE
+
+6) LIVRABLES
+------------
+- Code infrastructure Terraform module par module
+- Stack CloudFormation CI/CD reutilisable
+- Lambda + buildspecs + scripts de deploiement
+- Documentation complete (architecture.md + README)
+- Slides de soutenance + demo en direct
+- Repo GitHub public comme portfolio
+
+7) VALEUR POUR LE CV
+--------------------
+Competences demontrees : AWS, Terraform, CloudFormation, CI/CD,
+Containers (Docker/ECS/ECR), securite applicative, gestion de projet
+(Agile/Scrum), collaboration Git (branches/PR/reviews).
+
+Mot-cle recherche par les recruteurs : DevSecOps / SRE / Cloud
+Engineer / Platform Engineer.
+
+========================================================
